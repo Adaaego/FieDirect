@@ -1,5 +1,5 @@
-import { getListingBySlug } from '../lib/queries'
-import { listingMoveInCost, VIEWING_FEE, ghs } from '../lib/format'
+import { getListingBySlug } from './queries'
+import { listingMoveInCost, VIEWING_FEE, ghs } from './format'
 
 const GH_PHONE = /^(?:\+?233|0)[235]\d{8}$/
 
