@@ -1,0 +1,216 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --color-signal: var(--signal);
+
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --color-ink: var(--ink);
+  --color-ink-foreground: var(--ink-foreground);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+/*
+  FieDirect palette
+  - Forest (primary): deep green, trust + "go"
+  - Signal orange: the brand dot and small emphasis only
+  - Ink: deep green-black for text and dark surfaces
+  - Near-white neutrals
+*/
+:root {
+  color-scheme: light;
+  --background: oklch(0.985 0.002 150);
+  --foreground: oklch(0.22 0.025 160);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.22 0.025 160);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.22 0.025 160);
+  --primary: oklch(0.42 0.09 158);
+  --primary-foreground: oklch(0.99 0.003 150);
+  --secondary: oklch(0.955 0.01 155);
+  --secondary-foreground: oklch(0.22 0.025 160);
+  --muted: oklch(0.955 0.006 150);
+  --muted-foreground: oklch(0.48 0.015 160);
+  --accent: oklch(0.94 0.045 60);
+  --accent-foreground: oklch(0.42 0.12 45);
+  --signal: oklch(0.67 0.18 42);
+  --destructive: oklch(0.55 0.19 27);
+  --border: oklch(0.91 0.008 150);
+  --input: oklch(0.88 0.01 150);
+  --ring: oklch(0.42 0.09 158);
+  --ink: oklch(0.2 0.022 160);
+  --ink-foreground: oklch(0.97 0.004 150);
+  --radius: 0.625rem;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-feature-settings: 'cv11', 'ss01';
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display;
+    letter-spacing: -0.02em;
+  }
+}
+
+@utility font-display {
+  font-family: var(--font-display);
+}
+
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+@utility highlight {
+  background-image: linear-gradient(transparent 58%, var(--accent) 58%, var(--accent) 92%, transparent 92%);
+  padding-inline: 0.08em;
+}
+
+/* Wide page container: fills the screen up to 1600px with comfortable side gutters. */
+@utility page-wrap {
+  width: 100%;
+  max-width: 1600px;
+  margin-inline: auto;
+  padding-inline: 1rem;
+  @media (width >= 40rem) {
+    padding-inline: 1.5rem;
+  }
+  @media (width >= 64rem) {
+    padding-inline: 2.5rem;
+  }
+}
+
+@utility eyebrow {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes heroZoom {
+  from {
+    transform: scale(1.12);
+  }
+  to {
+    transform: scale(1.03);
+  }
+}
+
+@utility animate-rise {
+  animation: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: var(--delay, 0ms);
+}
+
+/* Scroll reveal. Only hides content when JS can reveal it again. */
+@media (scripting: enabled) {
+  .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 0.7s ease,
+      transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+    transition-delay: var(--delay, 0ms);
+  }
+  .reveal[data-shown] {
+    opacity: 1;
+    transform: none;
+  }
+}
+.booking-dialog::backdrop {
+  background: oklch(0.16 0.025 160 / 0.62);
+  backdrop-filter: blur(3px);
+}
+
+.booking-dialog[open] {
+  animation: dialog-in 180ms ease-out both;
+}
+
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.faq-answer {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition:
+    grid-template-rows 260ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    opacity 220ms ease;
+}
+
+.faq-answer-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.faq-item[open] .faq-answer {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
