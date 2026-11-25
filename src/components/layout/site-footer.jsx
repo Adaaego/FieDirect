@@ -74,10 +74,10 @@ export function SiteFooter() {
           </a>
 
           <a
-            href="mailto:hello@fiedirect.com"
+            href="mailto:hello@fieconnect.com"
             className="text-ink-foreground/80 hover:text-ink-foreground"
           >
-            hello@fiedirect.com
+            hello@fieconnect.com
           </a>
 
           <p className="text-ink-foreground/60">
