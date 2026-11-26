@@ -1,6 +1,6 @@
 import { Link, useSearchParams } from 'react-router-dom'
-import { ListingFilters } from '../components/listings/listing-filters'
-import { ListingCard } from '../components/listings/listing-card'
+import { ListingFilters } from '../listings/filters'
+import { ListingCard } from '../listings/listing-card'
 
 const whatsapp =
   'https://wa.me/233000000000?text=Hi%20FieDirect%2C%20I%27m%20looking%20for%20a%20place'

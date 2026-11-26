@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { useSaved } from '../../context/saved-provider'
+import { useSaved } from '../context/saved-provider'
 import { ListingCard } from './listing-card'
 
 export function SavedList({ listings = [] }) {

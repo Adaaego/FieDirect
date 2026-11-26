@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { ArrowRight, MapPin } from 'lucide-react'
-import { ghs } from '../lib/format'
+import { ghs } from '../../lib/format'
+
 
 export default function AreasPage({
   areas = [],

@@ -1,7 +1,7 @@
 import { useActionState, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, CalendarDays, CheckCircle2, Loader2, MapPin, X } from 'lucide-react'
-import { bookInspection } from '../../lib/actions'
+import { bookInspection } from '../../lib/action'
 import { durationLabel, ghs, listingMoveInCost, VIEWING_FEE } from '../../lib/format'
 import { cn } from '../../lib/utils'
 const slots = [

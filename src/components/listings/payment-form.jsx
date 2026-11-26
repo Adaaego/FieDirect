@@ -1,7 +1,7 @@
 import { useActionState, useState } from 'react'
 import { CheckCircle2, Loader2 } from 'lucide-react'
 
-import { startPayment } from '../../lib/actions'
+import { startPayment } from '../../lib/action'
 import {
   durationLabel,
   ghs,

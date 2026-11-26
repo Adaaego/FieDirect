@@ -1,4 +1,4 @@
-import { SavedList } from '../components/listings/saved-list'
+import { SavedList } from "../listings/saved-list"
 
 export default function SavedPage({ listings = [] }) {
   return (

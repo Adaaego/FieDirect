@@ -19,7 +19,7 @@ import {
 
 import { cn } from '../../lib/utils'
 import { StatusPill } from './status-pill'
-import { SaveButton } from './save-button'
+import { SaveButton } from '../shared/save-button'
 import { Signal } from '../shared/signal'
 
 export function ListingCard({ listing, priority = false }) {

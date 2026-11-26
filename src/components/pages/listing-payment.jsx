@@ -11,10 +11,10 @@ import {
   ghs,
   listingTypeLabel,
   longDate,
-} from '../lib/format'
+} from '../../lib/format'
 
-import { PaymentForm } from '../components/listings/payment-form'
-import { StatusPill } from '../components/listings/status-pill'
+import { PaymentForm } from '../listings/payment-form'
+import { StatusPill } from '../listings/status-pill'
 
 export default function ListingPaymentPage({
   listing = null,

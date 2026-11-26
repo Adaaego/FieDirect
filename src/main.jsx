@@ -1,9 +1,12 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
 import { BrowserRouter } from 'react-router-dom'
-import { SavedProvider } from './components/context/saved-provider.jsx'
+
+import '@fontsource-variable/dm-sans'
+import './index.css'
+
+import App from './App'
+import { SavedProvider } from './components/context/saved-provider'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

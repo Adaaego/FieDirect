@@ -11,13 +11,13 @@ import {
   durationOptionsLabel,
   listingTypeLabel,
   longDate,
-} from '../lib/format'
+} from '../../lib/format'
 
-import { Gallery } from '../components/listings/gallery'
-import { KnowBeforeYouGo } from '../components/listings/know-before-you-go'
-import { BookingPanel } from '../components/listings/booking-panel'
-import { ListingCard } from '../components/listings/listing-card'
-import { StatusPill } from '../components/listings/status-pill'
+import { Gallery } from '../listings/gallery'
+import { KnowBeforeYouGo } from '../listings/know-before-you-go'
+import { BookingPanel } from '../listings/booking-panel'
+import { ListingCard } from '../listings/listing-card'
+import { StatusPill } from '../listings/status-pill'
 
 const furnishedLabel = {
   unfurnished: 'Unfurnished',

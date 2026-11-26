@@ -19,7 +19,7 @@ import {
   listingTypeLabel,
 } from '../../lib/format'
 
-import { SaveButton } from '../listings/save-button'
+import { SaveButton } from '../shared/save-button'
 import { StatusPill } from '../listings/status-pill'
 
 const furnished = {

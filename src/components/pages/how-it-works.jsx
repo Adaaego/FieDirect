@@ -15,7 +15,7 @@ import {
   VIEWING_FEE,
   FIEDIRECT_SHORT_TERM_FEE,
   FIEDIRECT_LONG_TERM_FEE,
-} from '../lib/format'
+} from '../../lib/format'
 
 const viewingFee = ghs(VIEWING_FEE)
 

@@ -1,5 +1,5 @@
 import { Heart } from 'lucide-react'
-import { useSaved } from '../../context/saved-provider'
+import { useSaved } from '../context/saved-provider'
 import { cn } from '../../lib/utils'
 
 export function SaveButton({ listingId, title, className }) {
