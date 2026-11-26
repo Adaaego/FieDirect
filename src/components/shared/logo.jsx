@@ -1,32 +1,25 @@
 import { Link } from 'react-router-dom'
-import { House } from 'lucide-react'
 import { cn } from '../../lib/utils'
 
-export function Logo({ className, inverted = false }) {
-  const textColor = inverted
-    ? 'text-ink-foreground'
-    : 'text-primary'
-
+export function Logo({ inverted = false, className }) {
   return (
     <Link
       to="/"
-      className={cn('flex items-center gap-2', className)}
-      aria-label="FieConnect home"
+      aria-label="FieDirect home"
+      className="inline-flex w-fit shrink-0 items-center"
     >
-      <House
-        className={cn('size-6', textColor)}
-        strokeWidth={2.25}
-        aria-hidden="true"
-      />
-
-      <span
+      <img
+        src={
+          inverted
+            ? '/fiedirect-logo-light.png'
+            : '/fiedirect-logo-dark.png'
+        }
+        alt="FieDirect"
         className={cn(
-          'font-display text-xl font-bold tracking-tight',
-          textColor,
+          'h-12 w-auto object-contain',
+          className,
         )}
-      >
-        FieConnect<span className="text-signal">.</span>
-      </span>
+      />
     </Link>
   )
 }
