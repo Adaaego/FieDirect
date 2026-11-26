@@ -3,7 +3,7 @@ import { ListingFilters } from '../listings/filters'
 import { ListingCard } from '../listings/listing-card'
 
 const whatsapp =
-  'https://wa.me/233000000000?text=Hi%20FieDirect%2C%20I%27m%20looking%20for%20a%20place'
+  'https://wa.me/233535702336?text=Hi%20FieDirect%2C%20I%27m%20looking%20for%20a%20place'
 
 export default function ListingsPage({
   areas = [],
