@@ -1,151 +1,244 @@
-import {
-    BriefcaseBusiness,
-    CalendarDays,
-    MessageCircle,
-  } from 'lucide-react'
-  
-  import { ghs, longDate } from '../../lib/format'
-  
-  const avatarStyles = [
-    'bg-primary text-primary-foreground',
-    'bg-accent text-accent-foreground',
-    'bg-secondary text-secondary-foreground',
-  ]
-  
-  export function RoommateCard({ person, index = 0, whatsappNumber }) {
-    const name = person.displayName || 'Roommate'
-    const initial = name.charAt(0).toUpperCase()
-  
-    const preferredAreas = (person.areas ?? [])
-      .map((area) => area.name)
-      .filter(Boolean)
-      .join(' · ')
-  
-    const introductionMessage = encodeURIComponent(
-      `Hi FieDirect, I'd like to be introduced to ${name} as a potential roommate. Profile reference: ${person.id}`,
+import { Link, useSearchParams } from 'react-router-dom'
+import { ArrowRight, MapPin, UsersRound } from 'lucide-react'
+
+import { Reveal } from '../shared/reveal'
+import { cn } from '../../lib/utils'
+import { RoommateCard } from './roommate-card'
+
+export default function RoommatesPage({
+  areas = [],
+  profiles = [],
+  loading = false,
+  error = null,
+  whatsappNumber = '',
+}) {
+  const [searchParams] = useSearchParams()
+  const selectedSlug = searchParams.get('area')
+
+  const selectedArea = areas.find(
+    (area) => area.slug === selectedSlug,
+  )
+
+  const people = profiles
+    .filter(
+      (person) =>
+        !selectedSlug ||
+        person.areas?.some(
+          (area) => area.slug === selectedSlug,
+        ),
     )
-  
-    return (
-      <article className="flex h-full flex-col rounded-xl border bg-card p-5 transition-shadow duration-300 hover:shadow-lg hover:shadow-foreground/5 sm:p-6">
-  
-        {/* Profile information */}
-        <div className="flex items-start justify-between gap-3">
-          <div className="flex min-w-0 items-center gap-3">
-            <span
-              aria-hidden="true"
-              className={`grid size-14 shrink-0 place-items-center rounded-full font-display text-xl font-bold ${avatarStyles[index % avatarStyles.length]}`}
-            >
-              {initial}
+    .sort((a, b) =>
+      (b.createdAt ?? '').localeCompare(a.createdAt ?? ''),
+    )
+
+  return (
+    <div className="page-wrap py-5 sm:py-8">
+
+      {/* Page hero */}
+      <section className="grid overflow-hidden rounded-2xl bg-ink text-ink-foreground md:grid-cols-[1.3fr_0.7fr]">
+        <div className="flex flex-col justify-center gap-4 p-6 sm:p-8 lg:p-10">
+          <p className="eyebrow text-signal">
+            Good homes. Good company.
+          </p>
+
+          <h1 className="max-w-3xl text-3xl font-bold leading-tight text-balance sm:text-4xl lg:text-5xl">
+            Find your people.
+            <br className="hidden sm:block" />
+            {' '}Share the rent, not the stress.
+          </h1>
+
+          <p className="max-w-2xl leading-relaxed text-ink-foreground/75 sm:text-lg">
+            A year upfront is a lot on one salary. Meet people
+            looking for the same kind of home, then let our
+            team make a thoughtful introduction.
+          </p>
+
+          <div className="mt-1 flex flex-wrap gap-2 text-sm">
+            {!loading && !error && (
+              <span className="inline-flex items-center gap-2 rounded-full border border-ink-foreground/20 px-3 py-1.5">
+                <UsersRound
+                  className="size-4 text-signal"
+                  aria-hidden="true"
+                />
+
+                {profiles.length}{' '}
+                {profiles.length === 1 ? 'profile' : 'profiles'}
+              </span>
+            )}
+
+            <span className="inline-flex items-center gap-2 rounded-full border border-ink-foreground/20 px-3 py-1.5">
+              <MapPin
+                className="size-4 text-signal"
+                aria-hidden="true"
+              />
+              Across Accra
             </span>
-  
-            <div className="min-w-0">
-              <h3 className="truncate text-lg font-bold">
-                {name}
-                {Number.isInteger(person.age) && `, ${person.age}`}
-              </h3>
-  
-              {person.occupation && (
-                <p className="mt-0.5 flex items-center gap-1.5 text-sm text-muted-foreground">
-                  <BriefcaseBusiness
-                    className="size-3.5 shrink-0"
-                    aria-hidden="true"
-                  />
-  
-                  {person.occupation}
-                </p>
-              )}
-            </div>
           </div>
-  
-          {person.nationality && (
-            <span className="shrink-0 rounded-full bg-secondary px-2.5 py-1 text-xs font-medium">
-              {person.nationality}
-            </span>
+        </div>
+
+        <div className="relative hidden min-h-56 flex-col justify-between overflow-hidden bg-primary p-7 text-primary-foreground md:flex lg:p-9">
+          <div
+            aria-hidden="true"
+            className="absolute -right-10 -top-14 size-64 rounded-full border border-primary-foreground/20"
+          />
+
+          <div
+            aria-hidden="true"
+            className="absolute -right-1 top-0 size-44 rounded-full border border-primary-foreground/20"
+          />
+
+          <p className="relative text-sm font-medium text-primary-foreground/75">
+            A good match starts with a conversation.
+          </p>
+
+          <UsersRound
+            className="relative size-16"
+            strokeWidth={1.4}
+            aria-hidden="true"
+          />
+
+          <p className="relative max-w-xs text-2xl font-bold leading-tight">
+            Different stories. One place to call home.
+          </p>
+        </div>
+      </section>
+
+      {/* Roommate profiles */}
+      <section className="py-6 sm:py-8">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="eyebrow">
+              Meet the community
+            </p>
+
+            <h2 className="mt-1 text-2xl font-bold sm:text-3xl">
+              People looking to share a home
+              {selectedArea
+                ? ` in ${selectedArea.name}`
+                : ' in Accra'}.
+            </h2>
+          </div>
+
+          {!loading && !error && (
+            <p
+              className="text-sm text-muted-foreground"
+              aria-live="polite"
+            >
+              {people.length}{' '}
+              {people.length === 1 ? 'profile' : 'profiles'}
+            </p>
           )}
         </div>
-  
-        {/* About the person */}
-        {person.about && (
-          <p className="mt-5 leading-relaxed text-foreground/90">
-            “{person.about}”
-          </p>
-        )}
-  
-        {/* Lifestyle preferences */}
-        {person.lifestyle?.length > 0 && (
-          <ul
-            className="mt-4 flex flex-wrap gap-2"
-            aria-label="Lifestyle and preferences"
-          >
-            {person.lifestyle.map((trait) => (
-              <li
-                key={trait}
-                className="rounded-full border px-3 py-1 text-xs font-medium text-muted-foreground"
-              >
-                {trait}
-              </li>
-            ))}
-          </ul>
-        )}
-  
-        {/* Budget and preferred location */}
-        <dl className="mt-5 grid grid-cols-2 gap-3 border-t pt-4">
-          <div>
-            <dt className="text-xs text-muted-foreground">
-              Monthly budget
-            </dt>
-  
-            <dd className="mt-1 font-display text-lg font-bold tabular">
-              {Number.isFinite(person.budgetMonthly)
-                ? ghs(person.budgetMonthly)
-                : 'Not specified'}
-            </dd>
-          </div>
-  
-          <div>
-            <dt className="inline-flex items-center gap-1 text-xs text-muted-foreground">
-              <CalendarDays
-                className="size-3.5"
-                aria-hidden="true"
-              />
-  
-              Move in by
-            </dt>
-  
-            <dd className="mt-1 text-sm font-semibold">
-              {person.moveInBy
-                ? longDate(person.moveInBy)
-                : 'Flexible'}
-            </dd>
-          </div>
-  
-          <div className="col-span-2">
-            <dt className="text-xs text-muted-foreground">
-              Preferred areas
-            </dt>
-  
-            <dd className="mt-1 text-sm font-medium">
-              {preferredAreas || 'Not specified'}
-            </dd>
-          </div>
-        </dl>
-  
-        {/* Introduction request */}
-        {whatsappNumber && (
-          <div className="mt-auto pt-5">
-            <a
-              href={`https://wa.me/${whatsappNumber}?text=${introductionMessage}`}
-              className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-primary px-4 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
+
+        {/* Area filters */}
+        <nav
+          aria-label="Filter by area"
+          className="-mx-4 mt-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0"
+        >
+          <AreaLink to="/roommates" active={!selectedSlug}>
+            All areas
+          </AreaLink>
+
+          {areas.map((area) => (
+            <AreaLink
+              key={area.id}
+              to={`/roommates?area=${encodeURIComponent(area.slug)}`}
+              active={selectedSlug === area.slug}
             >
-              <MessageCircle
-                className="size-4"
+              {area.name}
+            </AreaLink>
+          ))}
+        </nav>
+
+        {/* Profile results */}
+        <div aria-busy={loading}>
+          {loading ? (
+            <p
+              role="status"
+              className="py-16 text-center text-sm text-muted-foreground"
+            >
+              Loading roommate profiles...
+            </p>
+          ) : error ? (
+            <div
+              role="alert"
+              className="mt-5 rounded-xl border p-8 text-center"
+            >
+              <p className="font-semibold">
+                Unable to load roommate profiles
+              </p>
+
+              <p className="mt-1 text-sm text-muted-foreground">
+                Please try again later.
+              </p>
+            </div>
+          ) : people.length === 0 ? (
+            <div className="mt-5 rounded-xl border border-dashed bg-card px-5 py-12 text-center">
+              <UsersRound
+                className="mx-auto mb-3 size-9 text-muted-foreground"
                 aria-hidden="true"
               />
-  
-              Ask FieDirect for an intro
-            </a>
-          </div>
-        )}
-      </article>
-    )
-  }
+
+              <p className="font-semibold">
+                {selectedSlug
+                  ? `No profiles in ${selectedArea?.name ?? 'this area'} yet.`
+                  : 'No roommate profiles yet.'}
+              </p>
+
+              <p className="mt-1 text-sm text-muted-foreground">
+                Check back as our roommate community grows.
+              </p>
+
+              {selectedSlug && (
+                <Link
+                  to="/roommates"
+                  className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline"
+                >
+                  See all areas
+                  <ArrowRight
+                    className="size-4"
+                    aria-hidden="true"
+                  />
+                </Link>
+              )}
+            </div>
+          ) : (
+            <ul className="mt-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+              {people.map((person, index) => (
+                <Reveal
+                  as="li"
+                  key={person.id}
+                  delay={index * 60}
+                >
+                  <RoommateCard
+                    person={person}
+                    index={index}
+                    whatsappNumber={whatsappNumber}
+                  />
+                </Reveal>
+              ))}
+            </ul>
+          )}
+        </div>
+      </section>
+    </div>
+  )
+}
+
+function AreaLink({ to, active, children }) {
+  return (
+    <Link
+      to={to}
+      aria-current={active ? 'page' : undefined}
+      className={cn(
+        'inline-flex h-10 shrink-0 items-center rounded-full border px-4 text-sm font-medium transition-colors',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+        active
+          ? 'border-primary bg-primary text-primary-foreground'
+          : 'bg-card hover:border-primary hover:text-primary',
+      )}
+    >
+      {children}
+    </Link>
+  )
+}

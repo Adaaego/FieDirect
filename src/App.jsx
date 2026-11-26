@@ -17,6 +17,7 @@ import AreasPage from './components/pages/areas'
 import SavedPage from './components/pages/saved'
 import NotFound from './components/pages/not-found'
 
+
 function App() {
   return (
     <div className="flex min-h-dvh flex-col">
