@@ -12,19 +12,17 @@ const nav = [
 ]
 
 const whatsapp =
-  'https://wa.me/233535702336?text=Hi%20FieConnect%2C%20I%27m%20looking%20for%20a%20place'
+  'https://wa.me/233535702336?text=Hi%20FieDirect%2C%20I%27m%20looking%20for%20a%20place'
 
 export function SiteHeader() {
   const { pathname } = useLocation()
   const [open, setOpen] = useState(false)
   const { savedIds } = useSaved()
 
-  if (pathname.startsWith('/team')) return null
-
   return (
     <header className="sticky top-0 z-40 border-b bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/85">
       <div className="page-wrap flex h-16 items-center justify-between gap-4">
-        <Logo />
+        <Logo className="h-10" />
 
         {/* Desktop navigation */}
         <nav

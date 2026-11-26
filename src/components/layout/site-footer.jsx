@@ -8,7 +8,7 @@ export function SiteFooter() {
 
         {/* Brand and description */}
         <div className="flex max-w-sm flex-col gap-4">
-          <Logo inverted className="h-30" />
+          <Logo inverted className="h-12" />
 
           <p className="text-sm leading-relaxed text-ink-foreground/70">
             Every house on FieDirect has been visited by our team.
